@@ -5,8 +5,11 @@ A robust Spring Boot REST API for managing Posts and Comments with secure sessio
 ## Features
 
 - **CRUD Operations** for Posts and Comments
+- **Rich Text Support in Comments**
+  - Markdown-based formatting
+  - Support for bold, italics, and hyperlinks
+  - Simple storage and rendering approach
 - **Soft Delete** for Posts (preserves historical data)
-- **Rich Text Support** in Comments (bold, italics, hyperlinks)
 - **User-Specific Access Control**
 - **Session-Based Authentication**
 - **Global Exception Handling**
@@ -188,6 +191,30 @@ The API will be available at: `http://localhost:8080/api/`
 - **Method**: DELETE
 - **Endpoint**: `/api/comment/deleteComment/{commentId}`
 
+### Rich Text Support in Comments
+
+The API implements rich text support using Markdown syntax for comments. This allows users to add formatting while keeping the implementation simple and efficient.
+
+#### Supported Markdown Features
+- **Bold Text**: Use `**text**` or `__text__`
+- *Italic Text*: Use `*text*` or `_text_`
+- [Hyperlinks](https://example.com): Use `[link text](URL)`
+
+#### Example Comment with Rich Text
+```json
+{
+  "postId": 1,
+  "comment": "Check out this **important** update! Here's a _great_ resource: [documentation](https://example.com)"
+}
+```
+
+#### Implementation Details
+- Comments are stored as raw Markdown text in the database
+- No preprocessing required on the backend
+- Frontend is responsible for rendering Markdown to HTML
+- Simple and efficient storage solution
+- Maintains readability even in raw format
+
 ## Security Features
 
 ### Session Authentication
@@ -252,10 +279,11 @@ mvn test
 - Input validation
 
 ### Data Management
-- Soft delete implementation
-- Rich text support
-- Database indexing
-- Transaction management
+- **Rich Text Implementation**
+  - Uses Markdown for simple yet powerful text formatting
+  - Direct storage of Markdown text in database
+  - Clean separation of storage and rendering concerns
+  - Frontend-side Markdown parsing
 
 ### Development Workflow
 - Version control with meaningful commits
